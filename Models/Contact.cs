@@ -18,6 +18,6 @@ namespace Phonebook.Models.Contacts
         [StringLength(100)]
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
-
+        public int OwnerID { get; set; }
     }
 }

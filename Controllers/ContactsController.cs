@@ -5,11 +5,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Phonebook.Filters;
 using Phonebook.Models.Contacts;
 using Phonebook.Models;
+using WebMatrix.WebData;
 
 namespace Phonebook.Controllers
 {
+    [Authorize]
+    [InitializeSimpleMembership]
     public class ContactsController : Controller
     {
         private PhonebookEntities db = new PhonebookEntities();
@@ -63,6 +67,9 @@ namespace Phonebook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Contact contact)
         {
+
+            contact.OwnerID = WebSecurity.GetUserId(User.Identity.Name);
+
             if (ModelState.IsValid)
             {
                 db.Contacts.Add(contact);
