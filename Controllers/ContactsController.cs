@@ -21,18 +21,21 @@ namespace Phonebook.Controllers
         //
         // GET: /Contacts/
 
-
         public ActionResult Index(string search = null)
+
         {
+            int currentUserID = WebSecurity.GetUserId(User.Identity.Name);
+            IQueryable<Contact> userContacts = db.Contacts.Where(contact => contact.OwnerID.Equals(currentUserID));
+
             if (null == search)
             {
-                return View(db.Contacts.ToList());
+                return View(userContacts.ToList());
             }
             else
             {
                 string query = HttpUtility.HtmlEncode(search);
 
-                IEnumerable<Contact> enumerable = (db.Contacts.Where(contact => contact.Name.Contains(query)));
+                IEnumerable<Contact> enumerable = (userContacts.Where(contact => contact.Name.Contains(query)));
 
                 return View(enumerable.ToList());
             }
