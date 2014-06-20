@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using Phonebook.Models.Contacts;
 
 namespace Phonebook.Models
 {
@@ -16,6 +17,8 @@ namespace Phonebook.Models
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+
     }
 
     [Table("UserProfile")]

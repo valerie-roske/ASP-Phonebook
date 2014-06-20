@@ -16,7 +16,7 @@ namespace Phonebook.Controllers
     [InitializeSimpleMembership]
     public class ContactsController : Controller
     {
-        private PhonebookEntities db = new PhonebookEntities();
+        private UsersContext db = new UsersContext();
 
         //
         // GET: /Contacts/

@@ -20,7 +20,7 @@ namespace Phonebook
         {
             AreaRegistration.RegisterAllAreas();
 
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<PhonebookEntities>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<UsersContext>());
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -25,8 +25,6 @@ namespace Phonebook.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
-
                 try
                 {
                     using (var context = new UsersContext())
