@@ -20,8 +20,6 @@ namespace Phonebook
         {
             AreaRegistration.RegisterAllAreas();
 
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EfContext>());
-
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
