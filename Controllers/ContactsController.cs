@@ -20,7 +20,6 @@ namespace Phonebook.Controllers
 
         //
         // GET: /Contacts/
-
         public ActionResult Index(string search = null)
 
         {
@@ -39,22 +38,6 @@ namespace Phonebook.Controllers
 
                 return View(SelectContactModels(filteredContacts));
             }
-
-        }
-
-        private static IEnumerable<Contact> SearchByNameOrPhoneNumber(IQueryable<Contact> allUsersContacts, string query)
-        {
-            return allUsersContacts.Where(contact => contact.Name.Contains(query) || contact.PhoneNumber.Contains(query));
-        }
-
-        private static List<ContactModel> SelectContactModels(IEnumerable<Contact> filteredContacts)
-        {
-            return filteredContacts.Select(c => new ContactModel {ContactId = c.ContactId, Name = c.Name, PhoneNumber = c.PhoneNumber}).ToList();
-        }
-        
-        private static ContactModel mapContactModel(Contact contact)
-        {
-            return new ContactModel {ContactId = contact.ContactId, Name = contact.Name, PhoneNumber = contact.PhoneNumber};
         }
 
         //
@@ -62,12 +45,7 @@ namespace Phonebook.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mapContactModel(contact));
+            return PutContactModelInViewResult(id);
         }
 
         //
@@ -106,12 +84,7 @@ namespace Phonebook.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mapContactModel(contact));
+            return PutContactModelInViewResult(id);
         }
 
         //
@@ -122,16 +95,12 @@ namespace Phonebook.Controllers
         public ActionResult Edit(ContactModel contactModel)
         {
             Contact contact = db.Contacts.Find(contactModel.ContactId);
-            contact.Name = contactModel.Name;
-            contact.PhoneNumber = contactModel.PhoneNumber;
-
-            if (ModelState.IsValid)
+            if (UserIsAllowedToView(contact))
             {
-                db.Entry(contact).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                SetContactInfoFrom(contactModel, contact);
+                return TryEdit(contact);
             }
-            return View(mapContactModel(contact));
+            return HttpNotFound();
         }
 
         //
@@ -139,12 +108,7 @@ namespace Phonebook.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Contact contact = db.Contacts.Find(id);
-            if (contact == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mapContactModel(contact));
+            return PutContactModelInViewResult(id);
         }
 
         //
@@ -155,9 +119,61 @@ namespace Phonebook.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Contact contact = db.Contacts.Find(id);
-            db.Contacts.Remove(contact);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (UserIsAllowedToView(contact))
+            {   db.Contacts.Remove(contact);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return HttpNotFound();
+        }
+
+        private static List<ContactModel> SelectContactModels(IEnumerable<Contact> filteredContacts)
+        {
+            return filteredContacts.Select(c => new ContactModel {ContactId = c.ContactId, Name = c.Name, PhoneNumber = c.PhoneNumber}).ToList();
+        }
+
+        private static IEnumerable<Contact> SearchByNameOrPhoneNumber(IQueryable<Contact> allUsersContacts, string query)
+        {
+            return allUsersContacts.Where(contact => contact.Name.Contains(query) || contact.PhoneNumber.Contains(query));
+        }
+
+        private ActionResult PutContactModelInViewResult(int id)
+        {
+            Contact contact = db.Contacts.Find(id);
+            if (UserIsAllowedToView(contact))
+            {
+                return View(GetContactModelFrom(contact));
+            }
+
+            return HttpNotFound();
+        }
+
+        private bool UserIsAllowedToView(Contact contact)
+        {
+            int currentUserId = WebSecurity.GetUserId(User.Identity.Name);
+            return ((contact != null) && (contact.OwnerID == currentUserId));
+        }
+
+        private static void SetContactInfoFrom(ContactModel contactModel, Contact contact)
+        {
+            contact.Name = contactModel.Name;
+            contact.PhoneNumber = contactModel.PhoneNumber;
+        }
+
+        private ActionResult TryEdit(Contact contact)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(contact).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(GetContactModelFrom(contact));
+        }
+
+        private static ContactModel GetContactModelFrom(Contact contact)
+        {
+            return new ContactModel {ContactId = contact.ContactId, Name = contact.Name, PhoneNumber = contact.PhoneNumber};
         }
 
         protected override void Dispose(bool disposing)
