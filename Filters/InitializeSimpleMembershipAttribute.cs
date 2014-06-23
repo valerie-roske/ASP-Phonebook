@@ -3,8 +3,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using Phonebook.Entities;
 using WebMatrix.WebData;
-using Phonebook.Models;
 
 namespace Phonebook.Filters
 {
@@ -27,7 +27,7 @@ namespace Phonebook.Filters
             {
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new EfContext())
                     {
                         if (!context.Database.Exists())
                         {

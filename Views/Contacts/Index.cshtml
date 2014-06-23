@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Phonebook.Models.Contacts.Contact>
+﻿@model List<Phonebook.Models.ContactModel>
 
 @{
     ViewBag.Title = "Index";
@@ -16,13 +16,10 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OwnerID)
+            Phone Number
         </th>
     </tr>
 
@@ -33,10 +30,8 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td><td>
-            @Html.DisplayFor(modelItem => item.OwnerID)
         </td>
-        <td>
+       <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ContactId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ContactId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ContactId })

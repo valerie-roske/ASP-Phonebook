@@ -5,8 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Phonebook.Entities;
 using Phonebook.Filters;
-using Phonebook.Models.Contacts;
 using Phonebook.Models;
 using WebMatrix.WebData;
 
@@ -16,7 +16,7 @@ namespace Phonebook.Controllers
     [InitializeSimpleMembership]
     public class ContactsController : Controller
     {
-        private UsersContext db = new UsersContext();
+        private EfContext db = new EfContext();
 
         //
         // GET: /Contacts/
@@ -25,21 +25,31 @@ namespace Phonebook.Controllers
 
         {
             int currentUserID = WebSecurity.GetUserId(User.Identity.Name);
-            IQueryable<Contact> userContacts = db.Contacts.Where(contact => contact.OwnerID.Equals(currentUserID));
+            IQueryable<Contact> allUsersContacts = db.Contacts.Where(contact => contact.OwnerID.Equals(currentUserID));
 
             if (null == search)
             {
-                return View(userContacts.ToList());
+                return View(SelectContactModels(allUsersContacts));
             }
             else
             {
                 string query = HttpUtility.HtmlEncode(search);
 
-                IEnumerable<Contact> enumerable = (userContacts.Where(contact => contact.Name.Contains(query)));
+                IEnumerable<Contact> filteredContacts = (allUsersContacts.Where(contact => contact.Name.Contains(query)));
 
-                return View(enumerable.ToList());
+                return View(SelectContactModels(filteredContacts));
             }
 
+        }
+
+        private static List<ContactModel> SelectContactModels(IEnumerable<Contact> filteredContacts)
+        {
+            return filteredContacts.Select(c => new ContactModel {ContactId = c.ContactId, Name = c.Name, PhoneNumber = c.PhoneNumber}).ToList();
+        }
+        
+        private static ContactModel mapContactModel(Contact contact)
+        {
+            return new ContactModel {ContactId = contact.ContactId, Name = contact.Name, PhoneNumber = contact.PhoneNumber};
         }
 
         //
@@ -52,7 +62,7 @@ namespace Phonebook.Controllers
             {
                 return HttpNotFound();
             }
-            return View(contact);
+            return View(mapContactModel(contact));
         }
 
         //
@@ -68,10 +78,13 @@ namespace Phonebook.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Contact contact)
+        public ActionResult Create(ContactModel contactModel)
         {
-
+            Contact contact = new Contact();
+            
             contact.OwnerID = WebSecurity.GetUserId(User.Identity.Name);
+            contact.Name = contactModel.Name;
+            contact.PhoneNumber = contactModel.PhoneNumber;
 
             if (ModelState.IsValid)
             {
@@ -80,7 +93,7 @@ namespace Phonebook.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(contact);
+            return View(contactModel);
         }
 
         //
@@ -93,7 +106,7 @@ namespace Phonebook.Controllers
             {
                 return HttpNotFound();
             }
-            return View(contact);
+            return View(mapContactModel(contact));
         }
 
         //
@@ -101,15 +114,19 @@ namespace Phonebook.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Contact contact)
+        public ActionResult Edit(ContactModel contactModel)
         {
+            Contact contact = db.Contacts.Find(contactModel.ContactId);
+            contact.Name = contactModel.Name;
+            contact.PhoneNumber = contactModel.PhoneNumber;
+
             if (ModelState.IsValid)
             {
                 db.Entry(contact).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(contact);
+            return View(mapContactModel(contact));
         }
 
         //
@@ -122,7 +139,7 @@ namespace Phonebook.Controllers
             {
                 return HttpNotFound();
             }
-            return View(contact);
+            return View(mapContactModel(contact));
         }
 
         //

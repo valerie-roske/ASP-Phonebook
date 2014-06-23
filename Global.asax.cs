@@ -7,7 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Phonebook.Models;
+using Phonebook.Entities;
 
 namespace Phonebook
 {
@@ -20,7 +20,7 @@ namespace Phonebook
         {
             AreaRegistration.RegisterAllAreas();
 
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<UsersContext>());
+            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EfContext>());
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

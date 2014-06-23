@@ -7,9 +7,9 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using Phonebook.Entities;
 using WebMatrix.WebData;
 using Phonebook.Filters;
-using Phonebook.Models;
 
 namespace Phonebook.Controllers
 {
@@ -263,7 +263,7 @@ namespace Phonebook.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (EfContext db = new EfContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
