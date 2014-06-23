@@ -35,11 +35,16 @@ namespace Phonebook.Controllers
             {
                 string query = HttpUtility.HtmlEncode(search);
 
-                IEnumerable<Contact> filteredContacts = (allUsersContacts.Where(contact => contact.Name.Contains(query)));
+                IEnumerable<Contact> filteredContacts = (SearchByNameOrPhoneNumber(allUsersContacts, query));
 
                 return View(SelectContactModels(filteredContacts));
             }
 
+        }
+
+        private static IEnumerable<Contact> SearchByNameOrPhoneNumber(IQueryable<Contact> allUsersContacts, string query)
+        {
+            return allUsersContacts.Where(contact => contact.Name.Contains(query) || contact.PhoneNumber.Contains(query));
         }
 
         private static List<ContactModel> SelectContactModels(IEnumerable<Contact> filteredContacts)
