@@ -7,4 +7,6 @@
 *.db
 *.dll
 *.pdb
-*.csproj
+*.user
+*.sln.*
+*.suo
