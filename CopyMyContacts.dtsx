@@ -12,8 +12,8 @@
   DTS:LocaleID="1033"
   DTS:MaxErrorCount="0"
   DTS:ObjectName="CopyMyContacts"
-  DTS:VersionBuild="12"
-  DTS:VersionGUID="{654EB189-9E38-4C62-8118-2FECA8CAEA10}">
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{D238F7DE-ABDB-4C32-9625-15D5347CB3E6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -190,6 +190,16 @@
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[NGL-DEV.Phonebook]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7EE57DBF-718F-47DE-B899-F136BD5F6DAA}"
+      DTS:ObjectName="NGL-DEV.Phonebook">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=NGL-DEV;Initial Catalog=Phonebook;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -646,6 +656,112 @@
               </outputs>
             </component>
             <component
+              refId="Package\Data Flow Task 1\Data Conversion 2"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion 2"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Data Conversion 2.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Data Conversion 2.Inputs[Data Conversion Input].Columns[GetContactNameAndNumber.ContactNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="GetContactNameAndNumber.ContactNumber"
+                      lineageId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[GetContactNameAndNumber.ContactNumber]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Data Conversion 2.Inputs[Data Conversion Input].Columns[GetContactNameAndNumber.ContactName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="GetContactNameAndNumber.ContactName"
+                      lineageId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[GetContactNameAndNumber.ContactName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Data Flow Task 1\Data Conversion 2.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output].Columns[UnicodeStrContactNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output].Columns[UnicodeStrContactNumber]"
+                      name="UnicodeStrContactNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[GetContactNameAndNumber.ContactNumber]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output].Columns[UnicodeStrContactName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output].Columns[UnicodeStrContactName]"
+                      name="UnicodeStrContactName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[GetContactNameAndNumber.ContactName]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Data Conversion 2.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Data Flow Task 1\Derived Column"
               componentClassID="{49928E82-9C4E-49F0-AABE-3812B82707EC}"
               contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
@@ -790,84 +906,6 @@
                   <externalMetadataColumns />
                 </output>
               </outputs>
-            </component>
-            <component
-              refId="Package\Data Flow Task 1\Flat File Destination"
-              componentClassID="{8DA75FED-1B7C-407D-B2AD-2B24209CCCA4}"
-              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
-              description="Flat File Destination"
-              localeId="1033"
-              name="Flat File Destination">
-              <properties>
-                <property
-                  dataType="System.Boolean"
-                  description="Specifies whether the data will overwrite or append to the destination file."
-                  name="Overwrite">true</property>
-                <property
-                  dataType="System.Null"
-                  description="Specifies the text to write to the destination file before any data is written."
-                  expressionType="Notify"
-                  name="Header" />
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\Data Flow Task 1\Flat File Destination.Connections[FlatFileConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
-                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
-                  name="FlatFileConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input]"
-                  hasSideEffects="true"
-                  name="Flat File Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].Columns[GetContactNameAndNumber.ContactName]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="GetContactNameAndNumber.ContactName"
-                      externalMetadataColumnId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
-                      lineageId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[GetContactNameAndNumber.ContactName]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].Columns[GetContactNameAndNumber.ContactNumber]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="GetContactNameAndNumber.ContactNumber"
-                      externalMetadataColumnId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 1]"
-                      lineageId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[GetContactNameAndNumber.ContactNumber]" />
-                    <inputColumn
-                      refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].Columns[UserId]"
-                      cachedDataType="i4"
-                      cachedName="UserId"
-                      externalMetadataColumnId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 2]"
-                      lineageId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[UserId]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      name="Column 0" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 1]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      name="Column 1" />
-                    <externalMetadataColumn
-                      refId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 2]"
-                      codePage="1252"
-                      dataType="str"
-                      length="255"
-                      name="Column 2" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
             </component>
             <component
               refId="Package\Data Flow Task 1\Flat File Source"
@@ -1369,6 +1407,147 @@
                           name="InputColumnID">#{Package\Data Flow Task 1\Merge Join 1.Inputs[Merge Join Right Input].Columns[UserId]}</property>
                       </properties>
                     </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Contacts]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[NGL-DEV.Phonebook]"
+                  connectionManagerRefId="Package.ConnectionManagers[NGL-DEV.Phonebook]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UserId]"
+                      cachedDataType="i4"
+                      cachedName="UserId"
+                      externalMetadataColumnId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OwnerID]"
+                      lineageId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output].Columns[UserId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UnicodeStrContactName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="UnicodeStrContactName"
+                      externalMetadataColumnId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output].Columns[UnicodeStrContactName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UnicodeStrContactNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="UnicodeStrContactNumber"
+                      externalMetadataColumnId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhoneNumber]"
+                      lineageId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output].Columns[UnicodeStrContactNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContactId]"
+                      dataType="i4"
+                      name="ContactId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="100"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhoneNumber]"
+                      dataType="wstr"
+                      length="30"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OwnerID]"
+                      dataType="i4"
+                      name="OwnerID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -1910,20 +2089,25 @@
               name="ContactInfo"
               startId="Package\Data Flow Task 1\Conditional Split.Outputs[ContactInfo]" />
             <path
-              refId="Package\Data Flow Task 1.Paths[Data Conversion Output2]"
-              endId="Package\Data Flow Task 1\Derived Column.Inputs[Derived Column Input]"
-              name="Data Conversion Output"
-              startId="Package\Data Flow Task 1\GetContactNameAndNumber.Outputs[Data Conversion Output]" />
-            <path
               refId="Package\Data Flow Task 1.Paths[Data Conversion Output1]"
               endId="Package\Data Flow Task 1\Sort.Inputs[Sort Input]"
               name="Data Conversion Output"
               startId="Package\Data Flow Task 1\Data Conversion 1.Outputs[Data Conversion Output]" />
             <path
+              refId="Package\Data Flow Task 1.Paths[Data Conversion Output2]"
+              endId="Package\Data Flow Task 1\Derived Column.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\Data Flow Task 1\GetContactNameAndNumber.Outputs[Data Conversion Output]" />
+            <path
               refId="Package\Data Flow Task 1.Paths[Data Conversion Output]"
               endId="Package\Data Flow Task 1\Data Conversion 1.Inputs[Data Conversion Input]"
               name="Data Conversion Output"
               startId="Package\Data Flow Task 1\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Data Flow Task 1.Paths[Data Conversion Output3]"
+              endId="Package\Data Flow Task 1\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Data Flow Task 1\Data Conversion 2.Outputs[Data Conversion Output]" />
             <path
               refId="Package\Data Flow Task 1.Paths[Derived Column Output]"
               endId="Package\Data Flow Task 1\Sort 2.Inputs[Sort Input]"
@@ -1940,15 +2124,15 @@
               name="Flat File Source Output"
               startId="Package\Data Flow Task 1\Flat File Source.Outputs[Flat File Source Output]" />
             <path
+              refId="Package\Data Flow Task 1.Paths[Merge Join Output1]"
+              endId="Package\Data Flow Task 1\Data Conversion 2.Inputs[Data Conversion Input]"
+              name="Merge Join Output"
+              startId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output]" />
+            <path
               refId="Package\Data Flow Task 1.Paths[Merge Join Output]"
               endId="Package\Data Flow Task 1\Derived Column 1.Inputs[Derived Column Input]"
               name="Merge Join Output"
               startId="Package\Data Flow Task 1\Merge Join.Outputs[Merge Join Output]" />
-            <path
-              refId="Package\Data Flow Task 1.Paths[Merge Join Output1]"
-              endId="Package\Data Flow Task 1\Flat File Destination.Inputs[Flat File Destination Input]"
-              name="Merge Join Output"
-              startId="Package\Data Flow Task 1\Merge Join 1.Outputs[Merge Join Output]" />
             <path
               refId="Package\Data Flow Task 1.Paths[OLE DB Source Output]"
               endId="Package\Data Flow Task 1\Data Conversion.Inputs[Data Conversion Input]"
@@ -1960,6 +2144,11 @@
               name="OwnerName"
               startId="Package\Data Flow Task 1\Conditional Split.Outputs[OwnerName]" />
             <path
+              refId="Package\Data Flow Task 1.Paths[Sort Output1]"
+              endId="Package\Data Flow Task 1\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Data Flow Task 1\Sort.Outputs[Sort Output]" />
+            <path
               refId="Package\Data Flow Task 1.Paths[Sort Output3]"
               endId="Package\Data Flow Task 1\Merge Join 1.Inputs[Merge Join Right Input]"
               name="Sort Output"
@@ -1969,11 +2158,6 @@
               endId="Package\Data Flow Task 1\Merge Join.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\Data Flow Task 1\Sort 1.Outputs[Sort Output]" />
-            <path
-              refId="Package\Data Flow Task 1.Paths[Sort Output1]"
-              endId="Package\Data Flow Task 1\Merge Join.Inputs[Merge Join Left Input]"
-              name="Sort Output"
-              startId="Package\Data Flow Task 1\Sort.Outputs[Sort Output]" />
             <path
               refId="Package\Data Flow Task 1.Paths[Sort Output2]"
               endId="Package\Data Flow Task 1\Merge Join 1.Inputs[Merge Join Left Input]"
@@ -2039,7 +2223,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.4487109375,9.970703125,30.897421875,9.55859375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2074,7 +2260,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-147.93955078125,50.0804597701149,52.8791015625,9.7978515625"
+              BoundingBox="-167.9592578125,50.0804597701149,92.918515625,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2109,7 +2295,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.10447265625,6.02685546875,30.2089453125,9.4462890625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
@@ -2139,7 +2327,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.35349609375,10.0390625,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2161,7 +2351,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.35349609375,42.0390625,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
@@ -2187,7 +2379,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.35349609375,7.0390625,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2209,7 +2403,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-82.60349609375,5,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2244,7 +2440,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="103.2811328125,49.6743295019157,55.937734375,9.5732421875"
+              BoundingBox="83.2707421875,49.6743295019157,95.958515625,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2283,7 +2479,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.35349609375,19.0390625,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2305,7 +2503,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.35349609375,21.5390625,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2327,7 +2527,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.10447265625,5.02685546875,30.2089453125,9.4462890625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2349,46 +2551,48 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-15.10447265625,3.02685546875,30.2089453125,9.4462890625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
           Size="139,42"
           Id="Package\Data Flow Task 1\Merge Join 1"
-          TopLeft="394,601" />
+          TopLeft="394,550" />
         <EdgeLayout
           Id="Package\Data Flow Task 1.Paths[Sort Output2]"
           TopLeft="186.5,479">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="255.166666666667,122"
+              EndConnector="255.166666666667,71"
               Start="0,0"
-              End="255.166666666667,114.5">
+              End="255.166666666667,63.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,68.3669985775249" />
+                    End="0,38.1152204836415" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,68.3669985775249"
-                    Point2="0,72.3669985775249"
-                    Point3="4,72.3669985775249" />
+                    Point1="0,38.1152204836415"
+                    Point2="0,42.1152204836415"
+                    Point3="4,42.1152204836415" />
                   <mssgle:LineSegment
-                    End="251.166666666667,72.3669985775249" />
+                    End="251.166666666667,42.1152204836415" />
                   <mssgle:CubicBezierSegment
-                    Point1="251.166666666667,72.3669985775249"
-                    Point2="255.166666666667,72.3669985775249"
-                    Point3="255.166666666667,76.3669985775249" />
+                    Point1="251.166666666667,42.1152204836415"
+                    Point2="255.166666666667,42.1152204836415"
+                    Point3="255.166666666667,46.1152204836415" />
                   <mssgle:LineSegment
-                    End="255.166666666667,114.5" />
+                    End="255.166666666667,63.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="119.583333333333,77.3669985775249,16,16"
+              BoundingBox="103.427102864583,47.1152204836415,48.3124609375,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2398,60 +2602,102 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-264.166666666667,117"
+              EndConnector="-264.166666666667,66"
               Start="0,0"
-              End="-264.166666666667,109.5">
+              End="-264.166666666667,58.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,65.4011379800853" />
+                    End="0,35.149359886202" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,65.4011379800853"
-                    Point2="0,69.4011379800853"
-                    Point3="-4,69.4011379800853" />
+                    Point1="0,35.149359886202"
+                    Point2="0,39.149359886202"
+                    Point3="-4,39.149359886202" />
                   <mssgle:LineSegment
-                    End="-260.166666666667,69.4011379800853" />
+                    End="-260.166666666667,39.149359886202" />
                   <mssgle:CubicBezierSegment
-                    Point1="-260.166666666667,69.4011379800853"
-                    Point2="-264.166666666667,69.4011379800853"
-                    Point3="-264.166666666667,73.4011379800853" />
+                    Point1="-260.166666666667,39.149359886202"
+                    Point2="-264.166666666667,39.149359886202"
+                    Point3="-264.166666666667,43.149359886202" />
                   <mssgle:LineSegment
-                    End="-264.166666666667,109.5" />
+                    End="-264.166666666667,58.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-140.083333333333,74.4011379800853,16,16"
+              BoundingBox="-156.239563802083,44.149359886202,48.3124609375,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="172,42"
-          Id="Package\Data Flow Task 1\Flat File Destination"
-          TopLeft="379,679" />
+          Size="171,42"
+          Id="Package\Data Flow Task 1\OLE DB Destination"
+          TopLeft="381,716" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Data Flow Task 1\Data Conversion 2"
+          TopLeft="388,609" />
         <EdgeLayout
           Id="Package\Data Flow Task 1.Paths[Merge Join Output1]"
-          TopLeft="464.25,643">
+          TopLeft="394,571">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,36"
+              EndConnector="-6,59"
               Start="0,0"
-              End="0,28.5">
+              End="-13.5,59">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.5" />
+                    End="-24.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-24.5,0"
+                    Point2="-28.5,0"
+                    Point3="-28.5,4" />
+                  <mssgle:LineSegment
+                    End="-28.5,55" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-28.5,55"
+                    Point2="-28.5,59"
+                    Point3="-24.5,59" />
+                  <mssgle:LineSegment
+                    End="-13.5,59" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-43.85349609375,-15.421875,30.7069921875,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task 1.Paths[Data Conversion Output3]"
+          TopLeft="468.5,651">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65"
+              Start="0,0"
+              End="0,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-15.35349609375,24.0390625,30.7069921875,9.421875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -2459,6 +2705,19 @@
   </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\Data Flow Task 1\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task 1\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
