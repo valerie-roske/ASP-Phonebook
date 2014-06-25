@@ -1,11 +1,9 @@
-[Bb]in/
 [Dd]ebug*/
 [Oo]bj/
 *.mdf
 *.ldf
 *.cache
 *.db
-*.dll
 *.pdb
 *.user
 *.sln.*
