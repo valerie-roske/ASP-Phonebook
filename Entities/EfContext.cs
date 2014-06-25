@@ -11,6 +11,6 @@ namespace Phonebook.Entities
 
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-
+        public DbSet<Campaign> Campaigns { get; set; }
     }
 }
