@@ -11,6 +11,7 @@ namespace Phonebook.Entities
         public int CampaignId { get; set; }
         [StringLength(100)]
         public String Name { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; } 
     }

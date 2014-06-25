@@ -12,6 +12,7 @@ namespace Phonebook.Models
         [StringLength(100)]
         public String Name { get; set; }
         [Required(ErrorMessage = "Date is required")]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public List<ContactModel> ContactModels { get; set; }
