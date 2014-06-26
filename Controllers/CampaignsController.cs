@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Phonebook.Entities;
+using Phonebook.Models;
 
 namespace Phonebook.Controllers
 {
@@ -119,6 +122,40 @@ namespace Phonebook.Controllers
         public ActionResult Export()
         {
             return View();
+        }
+
+
+        //
+        // POST: /Campaigns/Export
+        [HttpPost, ActionName("Export")]
+        public ActionResult Export(CampaignExportModel campaignExportModel)
+        {
+            DateTime startDateTime = campaignExportModel.StartDateTime;
+            DateTime endDateTime = campaignExportModel.EndDateTime;
+
+            IQueryable contactWithCampaigns =
+                from contacts in db.Contacts
+                from campaign in contacts.Campaigns
+                where campaign.Date >= startDateTime && campaign.Date <= endDateTime
+                select new ContactWithCampaign()
+                {
+                    Contact = contacts,
+                    Campaign = campaign
+                };
+
+            string path = @"c:\Mallerie\JustPrinting.txt";
+
+            // This text is always added, making the file longer over time 
+            // if it is not deleted. 
+            string headers = "Campaign Name, Campaign Date, Contact Name, Contact Phone Number" + Environment.NewLine;
+            System.IO.File.WriteAllText(path, headers);
+            foreach (ContactWithCampaign contactWithCampaign in contactWithCampaigns)
+            {
+                System.IO.File.AppendAllText(path,
+                    contactWithCampaign.Campaign.Name + "," + contactWithCampaign.Campaign.Date + "," + contactWithCampaign.Contact.Name + "," + contactWithCampaign.Contact.PhoneNumber + Environment.NewLine);
+            }
+
+            return View("Index", db.Campaigns.ToList());
         }
 
         protected override void Dispose(bool disposing)
