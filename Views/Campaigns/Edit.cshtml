@@ -38,9 +38,28 @@
 }
 
 <div>
+    Search: @Html.TextBox("Search For Contacts", "", new { id = "addContactToCampaign", placeholder = "Add a contact" })
+</div>
+
+<div class="campaign-attendees-display">
+    <div class="labels">
+        <div class="column-header">Name</div>
+        <div class="column-header">Phone Number</div>
+    </div>
+    <div class="fake-table">
+        <div class="ui-widget-content, campaign-attendees-names"></div>
+        <div class="ui-widget-content, campaign-attendees-phonenumbers"></div>
+        <div class="ui-widget-content, campaign-attendees-delete"></div>
+    </div>
+</div>
+
+
+<div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery-ui-1.8.24.min.js")
+    @Scripts.Render("~/scripts/autocomplete.js")
 }

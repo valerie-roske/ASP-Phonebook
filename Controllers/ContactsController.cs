@@ -127,6 +127,20 @@ namespace Phonebook.Controllers
             return HttpNotFound();
         }
 
+
+        public JsonResult SearchContacts(string searchString)
+        {
+            int currentUserId = WebSecurity.GetUserId(User.Identity.Name);
+            var contacts = from contact in db.Contacts
+                           where
+                           (contact.Name.Contains(searchString) || contact.PhoneNumber.Contains(searchString))
+                           select contact;
+
+            List<ContactModel> contactViewModels = SelectContactModels(contacts);
+
+            return Json(contactViewModels, JsonRequestBehavior.AllowGet);
+        }
+
         private static List<ContactModel> SelectContactModels(IEnumerable<Contact> filteredContacts)
         {
             return filteredContacts.Select(c => new ContactModel {ContactId = c.ContactId, Name = c.Name, PhoneNumber = c.PhoneNumber}).ToList();

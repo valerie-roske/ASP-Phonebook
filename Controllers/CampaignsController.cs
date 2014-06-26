@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Phonebook.Entities;
 using Phonebook.Models;
+using WebMatrix.WebData;
 
 namespace Phonebook.Controllers
 {
@@ -158,10 +159,36 @@ namespace Phonebook.Controllers
             return View("Index", db.Campaigns.ToList());
         }
 
+        [HttpPost]
+        public JsonResult AddContact(int contactID, int campaignID)
+        {
+            var contact = db.Contacts.Find(contactID);
+            var campaign = db.Campaigns.Find(campaignID);
+
+            campaign.Contacts.Add(contact);
+            db.SaveChanges();
+
+            return Json("Success");
+        }
+
+
+         //Post: /campaign/deleteContact
+         [HttpPost]
+         public JsonResult DeleteContact(int contactID, int campaignID)
+         {
+             var campaign = db.Campaigns.Find(campaignID);
+             var contact = db.Contacts.Find(contactID);
+             campaign.Contacts.Remove(contact);
+ 
+             db.SaveChanges();
+             return Json("Success");
+         }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
         }
+
     }
 }
