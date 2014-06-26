@@ -8,6 +8,7 @@ namespace Phonebook.Models
 {
     public class CampaignModel
     {
+        public int CampaignId { get; set; }
         [Required(ErrorMessage = "Name is required")]
         [StringLength(100)]
         public String Name { get; set; }

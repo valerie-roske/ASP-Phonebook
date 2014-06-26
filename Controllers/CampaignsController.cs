@@ -114,6 +114,13 @@ namespace Phonebook.Controllers
             return RedirectToAction("Index");
         }
 
+        //
+        // GET: /Campaigns/Export
+        public ActionResult Export()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

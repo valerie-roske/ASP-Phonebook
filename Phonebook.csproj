@@ -315,6 +315,7 @@
     <Content Include="Views\Campaigns\Create.cshtml" />
     <Content Include="Views\Campaigns\Edit.cshtml" />
     <Content Include="Views\Campaigns\Delete.cshtml" />
+    <Content Include="Views\Campaigns\Export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

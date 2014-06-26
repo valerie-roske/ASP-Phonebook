@@ -1,13 +1,16 @@
-﻿@model IEnumerable<Phonebook.Entities.Campaign>
+﻿@using Phonebook.Entities
+@model IEnumerable<Phonebook.Entities.Campaign>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <ul>
+        <li>@Html.ActionLink("Create New", "Create")</li>
+        <li>@Html.ActionLink("Export Contacts", "Export", "Campaigns")</li>
+    </ul>
 </p>
 <table>
     <tr>
