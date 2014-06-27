@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Phonebook.Entities;
 using Phonebook.Models;
+using WebMatrix.WebData;
 
 namespace Phonebook.Controllers
 {
@@ -143,7 +144,7 @@ namespace Phonebook.Controllers
                     Campaign = campaign
                 };
 
-            string path = @"c:\Mallerie\JustPrinting.txt";
+            string path = @"C:\Users\ngldev\Documents\Visual Studio 2013\Projects\ASP-Phonebook\JustPrinting.txt";
 
             // This text is always added, making the file longer over time 
             // if it is not deleted. 
@@ -152,16 +153,42 @@ namespace Phonebook.Controllers
             foreach (ContactWithCampaign contactWithCampaign in contactWithCampaigns)
             {
                 System.IO.File.AppendAllText(path,
-                    contactWithCampaign.Campaign.Name + "," + contactWithCampaign.Campaign.Date + "," + contactWithCampaign.Contact.Name + "," + contactWithCampaign.Contact.PhoneNumber + Environment.NewLine);
+                    contactWithCampaign.Campaign.Name + ", " + contactWithCampaign.Campaign.Date.ToString("MM/dd/yy") + ", " + contactWithCampaign.Contact.Name + ", " + contactWithCampaign.Contact.PhoneNumber + Environment.NewLine);
             }
 
             return View("Index", db.Campaigns.ToList());
         }
+
+        [HttpPost]
+        public JsonResult AddContact(int contactID, int campaignID)
+        {
+            var contact = db.Contacts.Find(contactID);
+            var campaign = db.Campaigns.Find(campaignID);
+
+            campaign.Contacts.Add(contact);
+            db.SaveChanges();
+
+            return Json("Success");
+        }
+
+
+         //Post: /Campaigns/DeleteContact
+         [HttpPost]
+         public JsonResult DeleteContact(int contactID, int campaignID)
+         {
+             var campaign = db.Campaigns.Find(campaignID);
+             var contact = db.Contacts.Find(contactID);
+             campaign.Contacts.Remove(contact);
+ 
+             db.SaveChanges();
+             return Json("Success");
+         }
 
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
         }
+
     }
 }

@@ -1,17 +1,16 @@
 ﻿@model Phonebook.Entities.Campaign
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Campaign";
 }
 
-<h2>Edit</h2>
+<h2>Edit Campaign</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Campaign</legend>
 
         @Html.HiddenFor(model => model.CampaignId)
 
@@ -36,6 +35,7 @@
         </p>
     </fieldset>
 }
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")

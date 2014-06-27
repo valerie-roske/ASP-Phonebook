@@ -1,29 +1,52 @@
 ﻿@model Phonebook.Entities.Campaign
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Campaign Details";
 }
 
-<h2>Details</h2>
+<h2>Campaign Details</h2>
 
 <fieldset>
-    <legend>Campaign</legend>
+    @Html.HiddenFor(model => model.CampaignId)
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Date)
+        @Html.DisplayNameFor(model => model.Date)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Date)
     </div>
 </fieldset>
+
+<div>
+    Search: @Html.TextBox("Search For Contacts", "", new { id = "addContactToCampaign", placeholder = "Add a contact" })
+</div>
+
+<div class="campaign-attendees-display">
+    <div class="labels">
+        <div class="column-header">Name</div>
+        <div class="column-header">Phone Number</div>
+    </div>
+    <div class="fake-table">
+        <div class="ui-widget-content, campaign-attendees-names"></div>
+        <div class="ui-widget-content, campaign-attendees-phonenumbers"></div>
+        <div class="ui-widget-content, campaign-attendees-delete"></div>
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.CampaignId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/jquery-ui-1.8.24.min.js")
+    @Scripts.Render("~/scripts/autocomplete.js")
+}

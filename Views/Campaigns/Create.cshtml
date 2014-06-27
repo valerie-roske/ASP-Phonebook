@@ -1,17 +1,16 @@
 ﻿@model Phonebook.Entities.Campaign
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Campaign";
 }
 
-<h2>Create</h2>
+<h2>Create Campaign</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Campaign</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)

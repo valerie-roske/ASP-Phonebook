@@ -1,17 +1,16 @@
 ﻿@model Phonebook.Models.ContactModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Contact";
 }
 
-<h2>Edit</h2>
+<h2>Edit Contact</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Contact</legend>
 
         @Html.HiddenFor(model => model.ContactId)
 

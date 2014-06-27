@@ -2,10 +2,10 @@
 @model IEnumerable<Phonebook.Entities.Campaign>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "My Campaigns";
 }
 
-<h2>Index</h2>
+<h2>My Campaigns</h2>
 <p>
     <ul>
         <li>@Html.ActionLink("Create New", "Create")</li>
@@ -34,7 +34,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CampaignId }) |
             @Html.ActionLink("Details", "Details", new { id=item.CampaignId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CampaignId })
+            @Html.ActionLink("Delete", "Delete", new { id = item.CampaignId })
         </td>
     </tr>
 }
