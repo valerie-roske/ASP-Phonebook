@@ -172,7 +172,7 @@ namespace Phonebook.Controllers
         }
 
 
-         //Post: /campaign/deleteContact
+         //Post: /Campaigns/DeleteContact
          [HttpPost]
          public JsonResult DeleteContact(int contactID, int campaignID)
          {

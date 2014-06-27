@@ -431,7 +431,7 @@ input, textarea {
     font-size: 1.2em;
     margin: 5px 0 6px 0;
     padding: 5px;
-    width: 300px;
+    width: 285px;
 }
 
 textarea {
@@ -584,6 +584,61 @@ td {
 
 tr.pager td {
     padding: 0 0.25em 0 0;
+}
+
+/* Campaign table*/
+
+.column-header {
+    display: inline-block;
+    width: 150px;
+}
+
+li.ui-menu-item {
+    list-style: none;
+}
+
+.fake-table {
+    background-color: white;
+    border:1px solid grey; 
+    width: 340px;
+}
+
+.campaign-attendees-names {
+    display:inline-block; 
+    height: 200px; 
+    border:none; 
+    width: 150px; 
+    overflow: auto;
+}
+   
+.campaign-attendees-phonenumbers {
+    display: inline-block;
+    border:none; 
+    height: 200px; 
+    width: 150px; 
+    overflow: auto;
+}
+
+.campaign-attendees-delete {
+    display: inline-block;
+    border:none; 
+    height: 200px; 
+    width: 30px;
+    overflow: auto; 
+}
+
+.delete-button-container {
+    height: 19px;
+    width: 15px;
+}
+
+.delete-button {
+    display: inherit;
+    padding: 0px;
+    font-size: 0.8em;
+    height: 100%;
+    width: 100%;
+    color: red;
 }
 
 
