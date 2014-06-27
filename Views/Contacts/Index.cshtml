@@ -1,17 +1,17 @@
 ﻿@model List<Phonebook.Models.ContactModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "My Contacts";
 }
 
-<h2>Index</h2>
+<h2>My Contacts</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <form>
     <input type="text" name="search" placeholder="Search for contacts"/>
-    <input type="submit" name="Search" />
+    <input type="submit" value="Search" />
 </form>
 <table>
     <tr>
