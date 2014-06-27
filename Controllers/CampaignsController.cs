@@ -144,7 +144,7 @@ namespace Phonebook.Controllers
                     Campaign = campaign
                 };
 
-            string path = @"c:\Mallerie\JustPrinting.txt";
+            string path = @"C:\Users\ngldev\Documents\Visual Studio 2013\Projects\ASP-Phonebook\JustPrinting.txt";
 
             // This text is always added, making the file longer over time 
             // if it is not deleted. 
@@ -153,7 +153,7 @@ namespace Phonebook.Controllers
             foreach (ContactWithCampaign contactWithCampaign in contactWithCampaigns)
             {
                 System.IO.File.AppendAllText(path,
-                    contactWithCampaign.Campaign.Name + "," + contactWithCampaign.Campaign.Date + "," + contactWithCampaign.Contact.Name + "," + contactWithCampaign.Contact.PhoneNumber + Environment.NewLine);
+                    contactWithCampaign.Campaign.Name + ", " + contactWithCampaign.Campaign.Date.ToString("MM/dd/yy") + ", " + contactWithCampaign.Contact.Name + ", " + contactWithCampaign.Contact.PhoneNumber + Environment.NewLine);
             }
 
             return View("Index", db.Campaigns.ToList());
