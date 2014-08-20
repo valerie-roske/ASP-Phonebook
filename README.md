@@ -1,4 +1,4 @@
 ASP-Phonebook
 =============
 
-Basic Phonebook in .NET
+Basic Phonebook app written in C# / ASP.NET MVC4
